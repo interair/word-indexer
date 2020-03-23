@@ -16,7 +16,7 @@ internal class LocalWordsRepositoryTest {
 
     @Test
     fun findByDocumentWord() {
-        var repository = LocalWordsRepository(cache())
+        val repository = LocalWordsRepository(cache())
         repository.saveWord(WordData("test", Ref("test1.txt")))
         repository.saveWord(WordData("test", Ref("test2.txt")))
         val findByDocumentWord = repository.findByDocumentWord("test")
