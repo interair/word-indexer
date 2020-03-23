@@ -34,7 +34,7 @@ class RestDiscoveryClient(val partitions: Int): DiscoveryClient {
         val name = nodeInfo.startPartition.toString() + "_" + nodeInfo.endPartition.toString()
         (nodeInfo.startPartition..nodeInfo.endPartition).forEach {
             mapping.asMap().compute(it.toString()) { key: String, value: Set<ServiceInstance>? ->
-                (value ?: HashSet()).plus(DefaultServiceInstance(it.toString(), name, nodeInfo.nodeUrl, nodeInfo.nodePort, false))
+                (value ?: HashSet()).plus(DefaultServiceInstance(key, name, nodeInfo.nodeUrl, nodeInfo.nodePort, false))
             }
         }
     }
