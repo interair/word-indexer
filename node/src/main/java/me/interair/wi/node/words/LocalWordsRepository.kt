@@ -1,4 +1,4 @@
-package me.interair.wi.words
+package me.interair.wi.node.words
 
 import me.interair.wi.word.WordData
 import me.interair.wi.word.WordReport
@@ -11,6 +11,9 @@ class LocalWordsRepository(val cache: Cache<String, WordReport>) : WordsReposito
         return cache[word] ?: WordReport(word)
     }
 
+    /**
+     * CAS update
+     */
     override fun saveWord(wordData: WordData) {
         val current = WordReport(wordData.word)
         current.add(wordData.source)

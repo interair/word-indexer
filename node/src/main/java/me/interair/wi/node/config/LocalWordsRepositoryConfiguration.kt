@@ -1,7 +1,7 @@
 package me.interair.wi.node.config
 
 import me.interair.wi.word.WordReport
-import me.interair.wi.words.LocalWordsRepository
+import me.interair.wi.node.words.LocalWordsRepository
 import org.ehcache.Cache
 import org.ehcache.CacheManager
 import org.ehcache.config.builders.CacheConfigurationBuilder

@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 /**
  */
 @EnableSwagger2
-class SpringFoxConfiguration {
+class SwaggerConfiguration {
 
     @Bean
     fun swaggerDocket(): Docket {

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import
         HttpEncodingAutoConfiguration::class,
         MultipartAutoConfiguration::class,
         WebMvcAutoConfiguration::class,
-        SpringFoxConfiguration::class
+        SwaggerConfiguration::class
 )
 @ComponentScan(basePackageClasses = [WebConfiguration::class])
 @Configuration
