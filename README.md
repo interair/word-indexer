@@ -21,7 +21,7 @@
 
 Использует Partitioning by hash of key, где Key - слово для партиционирования данных соответственно (Consistent hashing):
 
-Как в Cassandra/Redis будет 256 партиций, каждая нода будет отвечать за рендж партиций и слать информацию о себе в виде hart-beat в gateway, пример данных {nodeUtl: "https/first-index-node:8080", partitions: "0:127", "health":"ok"}
+Как в Cassandra/Redis будет 256 партиций, каждая нода будет отвечать за рендж партиций и слать информацию о себе в виде heartbeat в gateway, пример данных {nodeUtl: "https/first-index-node:8080", partitions: "0:127", "health":"ok"}
 
 Gateway будет использовать эту информацию для выбора куда слать запрос на поиск
 
