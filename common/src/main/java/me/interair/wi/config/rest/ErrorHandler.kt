@@ -1,7 +1,6 @@
 package me.interair.wi.config.rest
 
 import com.google.common.base.Throwables
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -10,22 +9,24 @@ import org.springframework.http.ResponseEntity
 import org.springframework.util.MimeTypeUtils
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.context.request.WebRequest
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.time.LocalDateTime
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-/**
- */
 @ControllerAdvice
 class ErrorHandler(
         @Value("\${spring.application.name:test}")
         private val name: String
-) {
+): ResponseEntityExceptionHandler() {
 
-    @Suppress("LeakingThis")
-    private val log = LoggerFactory.getLogger(this::class.java)
+    @ExceptionHandler(value = [IllegalArgumentException::class, IllegalStateException::class])
+    protected fun handleIllegalArgumentException(ex: RuntimeException, request: WebRequest?): ResponseEntity<*>? {
+        return handleExceptionInternal(ex, ex.message, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
+    }
 
     /**
      * see https://github.com/spring-projects/spring-boot/issues/8625
