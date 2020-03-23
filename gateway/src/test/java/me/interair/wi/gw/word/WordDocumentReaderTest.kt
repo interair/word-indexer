@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.rules.TemporaryFolder
 import kotlin.test.assertEquals
 
-
 internal class WordDocumentReaderTest {
 
     @Rule
