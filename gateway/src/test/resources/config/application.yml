@@ -1,0 +1,9 @@
+
+spring:
+  application:
+    name: "word-indexer"
+
+logging:
+  level:
+    "org.springframework.boot.autoconfigure.logging": DEBUG
+

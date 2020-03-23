@@ -1,0 +1,6 @@
+rootProject.name = 'word-indexer'
+
+include ":common"
+include ":node"
+include ":gateway"
+

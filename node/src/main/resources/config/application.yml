@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: "word-search-node"
+  mvc:
+    throw-exception-if-no-handler-found: true
+    log-resolved-exception: true
+server:
+  display-name: "word-search-node"
+
+logging:
+  level:
+    "org.springframework.boot.autoconfigure.logging": WARN
+
