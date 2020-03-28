@@ -1,9 +1,8 @@
 package me.interair.wi.gw.partitioning
 
 import me.interair.wi.config.node.NodeInfo
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class RestDiscoveryClientTest {
 

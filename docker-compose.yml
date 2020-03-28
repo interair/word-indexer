@@ -1,0 +1,62 @@
+version: '3'
+services:
+  config-gateway:
+    container_name: gateway
+    image: word-indexer/gateway:latest
+    expose:
+      - 8880
+    ports:
+      - 8080:8080
+    networks:
+      - wi-network
+  config-shard1-node1:
+    container_name: shard1-node1
+    image: word-indexer/node:latest
+    environment:
+      NODE_STARTPARTITION: 0
+      NODE_ENDPARTITION: 127
+      NODE_ENDPOINTURL: http://gateway:8080
+      NODE_SELFNAME: shard1-node1
+    expose:
+      - 8081
+    networks:
+      - wi-network
+  config-shard1-node2:
+    container_name: shard1-node2
+    image: word-indexer/node:latest
+    environment:
+      NODE_STARTPARTITION: 0
+      NODE_ENDPARTITION: 127
+      NODE_ENDPOINTURL: http://gateway:8080
+      NODE_SELFNAME: shard1-node2
+    expose:
+      - 8081
+    networks:
+      - wi-network
+  config-shard2-node1:
+    container_name: shard2-node1
+    image: word-indexer/node:latest
+    environment:
+      NODE_STARTPARTITION: 128
+      NODE_ENDPARTITION: 255
+      NODE_ENDPOINTURL: http://gateway:8080
+      NODE_SELFNAME: shard2-node1
+    expose:
+      - 8081
+    networks:
+      - wi-network
+  config-shard2-node2:
+    container_name: shard2-node2
+    image: word-indexer/node:latest
+    environment:
+      NODE_STARTPARTITION: 128
+      NODE_ENDPARTITION: 255
+      NODE_ENDPOINTURL: http://gateway:8080
+      NODE_SELFNAME: shard2-node2
+    expose:
+      - 8081
+    networks:
+      - wi-network
+networks:
+  wi-network:
+    driver: bridge

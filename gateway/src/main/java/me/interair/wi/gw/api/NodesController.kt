@@ -1,4 +1,4 @@
-package me.interair.wi.gw.rest
+package me.interair.wi.gw.api
 
 import me.interair.wi.config.node.NodeInfo
 import me.interair.wi.gw.partitioning.RestDiscoveryClient
@@ -23,7 +23,7 @@ class NodesController(val discovery: RestDiscoveryClient, val discoveryClient: R
     }
 
     @PutMapping
-    fun update(info: NodeInfo) {
+    fun update(@RequestBody info: NodeInfo) {
         discoveryClient.update(info)
     }
 }

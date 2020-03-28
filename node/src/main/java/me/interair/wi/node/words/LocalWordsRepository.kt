@@ -4,25 +4,30 @@ import me.interair.wi.word.WordData
 import me.interair.wi.word.WordReport
 import me.interair.wi.word.WordsRepository
 import org.ehcache.Cache
+import org.slf4j.LoggerFactory
+import reactor.core.publisher.Mono
 
 class LocalWordsRepository(val cache: Cache<String, WordReport>) : WordsRepository {
 
-    override fun findByDocumentWord(word: String): WordReport {
-        return cache[word] ?: WordReport(word)
+    private val log = LoggerFactory.getLogger(javaClass)
+
+    override fun findByDocumentWord(word: String): Mono<WordReport> {
+        return Mono.just(cache[word.toLowerCase()] ?: WordReport(word))
     }
 
     /**
      * CAS update
      */
-    override fun saveWord(wordData: WordData) {
-        val current = WordReport(wordData.word)
-        current.add(wordData.source)
-        var previous = cache.putIfAbsent(wordData.word, current)
+    override fun saveWord(w: WordData) {
+        val current = WordReport(w.word)
+        current.add(w.source)
+        var previous = cache.putIfAbsent(w.word, current)
         if (previous != null) {
             current.merge(previous)
-            while (!cache.replace(wordData.word, previous, current)) {
-                previous = cache[wordData.word]
+            while (!cache.replace(w.word, previous, current)) {
+                previous = cache[w.word]
                 current.merge(previous)
+                log.info("Saved word: {}", w)
             }
         }
     }

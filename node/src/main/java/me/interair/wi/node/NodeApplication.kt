@@ -1,6 +1,6 @@
 package me.interair.wi.node
 
-import me.interair.wi.config.rest.WebConfiguration
+import me.interair.wi.config.api.WebConfiguration
 import me.interair.wi.node.config.LocalWordsRepositoryConfiguration
 import me.interair.wi.node.config.NodeConfiguration
 import me.interair.wi.node.config.NodeProperties

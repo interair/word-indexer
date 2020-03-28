@@ -7,7 +7,7 @@ import java.io.File
  */
 class DocsStorage(val baseFileLocation: String) {
 
-    fun get(id: String): File? {
+    fun get(id: String): File {
         return File(baseFileLocation, id)
     }
 

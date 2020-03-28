@@ -1,7 +1,7 @@
 package me.interair.wi.node.config
 
-import me.interair.wi.word.WordReport
 import me.interair.wi.node.words.LocalWordsRepository
+import me.interair.wi.word.WordReport
 import org.ehcache.Cache
 import org.ehcache.CacheManager
 import org.ehcache.config.builders.CacheConfigurationBuilder
@@ -11,7 +11,6 @@ import org.ehcache.config.units.EntryUnit
 import org.ehcache.config.units.MemoryUnit
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-
 
 @Configuration
 class LocalWordsRepositoryConfiguration {

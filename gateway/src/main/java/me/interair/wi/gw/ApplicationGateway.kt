@@ -1,9 +1,8 @@
 package me.interair.wi.gw
 
-import me.interair.wi.config.rest.WebConfiguration
+import me.interair.wi.config.api.WebConfiguration
 import me.interair.wi.gw.configuration.GatewayConfiguration
 import me.interair.wi.gw.configuration.GatewayProperties
-import me.interair.wi.gw.configuration.RestClientConfiguration
 import me.interair.wi.gw.docs.DocumentConfiguration
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.SpringBootConfiguration
@@ -22,8 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
         WebConfiguration::class,
         DocumentConfiguration::class,
         GatewayConfiguration::class,
-        GatewayProperties::class,
-        RestClientConfiguration::class
+        GatewayProperties::class
 )
 @EnableHystrix
 @EnableScheduling

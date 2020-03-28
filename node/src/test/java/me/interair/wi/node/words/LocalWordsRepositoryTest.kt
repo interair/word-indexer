@@ -20,8 +20,9 @@ internal class LocalWordsRepositoryTest {
         repository.saveWord(WordData("test", Ref("test1.txt")))
         repository.saveWord(WordData("test", Ref("test2.txt")))
         val findByDocumentWord = repository.findByDocumentWord("test")
-        assertNotNull(findByDocumentWord)
-        assertEquals(2, findByDocumentWord.refs.size)
+        val report = findByDocumentWord.block()
+        assertNotNull(report)
+        assertEquals(2, report.refs.size)
     }
 
     fun cache(): Cache<String, WordReport> {

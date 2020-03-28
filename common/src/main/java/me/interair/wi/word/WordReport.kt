@@ -5,7 +5,7 @@ import java.io.Serializable
 data class WordReport(
         val word: String,
         val refs: MutableSet<Ref> = HashSet()
-): Serializable {
+) : Serializable {
 
     fun add(source: Ref) {
         refs.add(source)

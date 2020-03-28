@@ -37,7 +37,7 @@ allprojects {
     dependencyManagement {
         imports {
             mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR1"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR3"
         }
         dependencies {
             dependency "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -58,6 +58,13 @@ allprojects {
             dependency "io.springfox:springfox-swagger2:$springfox_version"
             dependency "io.springfox:springfox-swagger-ui:$springfox_version"
         }
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
     }
 }
 

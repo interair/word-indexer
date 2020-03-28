@@ -25,8 +25,12 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava'
     compile "org.springframework:spring-context"
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-validation'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile "io.springfox:springfox-swagger2"
     compile "io.springfox:springfox-swagger-ui"
+    compile 'org.springframework.cloud:spring-cloud-loadbalancer'
+    compile 'org.springframework.cloud:spring-cloud-starter-gateway'
 
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'

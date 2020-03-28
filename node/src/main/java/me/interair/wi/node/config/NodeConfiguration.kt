@@ -1,24 +1,25 @@
 package me.interair.wi.node.config
 
-import me.interair.wi.node.rest.WordController
-import org.springframework.boot.web.client.RestTemplateBuilder
+import me.interair.wi.node.lookup.LookupService
+import me.interair.wi.node.api.WordController
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.client.RestTemplate
-
+import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
 @ComponentScan(basePackageClasses = [WordController::class])
 class NodeConfiguration {
 
     @Bean
-    fun restTemplate(builder: RestTemplateBuilder, properties: NodeProperties): RestTemplate? {
-        return builder.rootUri(properties.endpoint).build()
+    fun webClient(nodeProperties: NodeProperties, webClientBuilder: WebClient.Builder): WebClient {
+        return webClientBuilder
+                .baseUrl(nodeProperties.endpointUrl)
+                .build()
     }
 
     @Bean
-    fun restTemplateBuilder(): RestTemplateBuilder {
-        return RestTemplateBuilder()
+    fun lookupService(webClient: WebClient, nodeProperties: NodeProperties): LookupService {
+        return LookupService(webClient, nodeProperties)
     }
 }

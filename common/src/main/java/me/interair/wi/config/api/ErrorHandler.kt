@@ -1,4 +1,4 @@
-package me.interair.wi.config.rest
+package me.interair.wi.config.api
 
 import com.google.common.base.Throwables
 import org.springframework.beans.factory.annotation.Value
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse
 class ErrorHandler(
         @Value("\${spring.application.name:test}")
         private val name: String
-): ResponseEntityExceptionHandler() {
+) : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [IllegalArgumentException::class, IllegalStateException::class])
     protected fun handleIllegalArgumentException(ex: RuntimeException, request: WebRequest?): ResponseEntity<*>? {

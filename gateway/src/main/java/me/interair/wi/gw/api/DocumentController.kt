@@ -1,8 +1,9 @@
-package me.interair.wi.gw.rest
+package me.interair.wi.gw.api
 
 import me.interair.wi.gw.docs.DocsStorage
 import me.interair.wi.gw.word.WordDocumentReader
 import me.interair.wi.word.WordsRepository
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -22,6 +23,8 @@ class DocumentController(
         val reader: WordDocumentReader
 ) {
 
+    private val log = LoggerFactory.getLogger(javaClass)
+
     companion object {
         const val MAX_DOC_SIZE = 20 * 1024 * 1024
     }
@@ -33,7 +36,10 @@ class DocumentController(
 
     @GetMapping("/download")
     fun download(id: String): ResponseEntity<StreamingResponseBody> {
-        val file = docStorage.get(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val file = docStorage.get(id)
+        if (!file.exists()) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
         val headers = HttpHeaders()
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''${file.name}")
         return ResponseEntity(StreamingResponseBody { os ->
@@ -50,19 +56,18 @@ class DocumentController(
         return processData(fileName = id, data = txt.toByteArray())
     }
 
-    private fun checkDocumentIsNew(id: String?) {
+    private fun checkDocumentIsNew(id: String) {
         // we must not upload to already existed document!
-        if (id != null && docStorage.get(id) != null) {
-            throw IllegalAccessException("Document with $id already exists.")
+        if (docStorage.get(id).exists()) {
+            throw IllegalArgumentException("Document with $id already exists.")
         }
     }
 
     @PostMapping("/upload")
     fun uploadSource(
-            @RequestPart("file") file: MultipartFile,
-            @RequestParam(name = "id", required = false) id: String?
+            @RequestPart("file") file: MultipartFile
     ): WordsProcessResult {
-        checkDocumentIsNew(id)
+        checkDocumentIsNew(file.name)
         checkContentSize(file.size)
 
         return processData(fileName = file.name, data = file.inputStream.use {
@@ -78,17 +83,18 @@ class DocumentController(
     }
 
     private fun processData(fileName: String, data: ByteArray): WordsProcessResult {
-
+        log.info("Processing filename {}", fileName)
         val start = System.currentTimeMillis()
         val store = docStorage.store(fileName, data)
         val wordCount = reader.read(store, consumer = { word -> repository.saveWord(word) })
+        log.info("Extracted words: {} from filename {}", wordCount, fileName)
         return WordsProcessResult((System.currentTimeMillis() - start), fileName, wordCount)
     }
 
-    data class WordsProcessResult (
-        val processingTime: Long,
-        val file: String,
-        val wordCount: Int
+    data class WordsProcessResult(
+            val processingTime: Long,
+            val file: String,
+            val wordCount: Int
     )
 
 }

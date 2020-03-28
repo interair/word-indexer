@@ -6,8 +6,9 @@ spring:
     log-resolved-exception: true
 server:
   display-name: "word-search-node"
+  port: 8081
 
 logging:
   level:
-    "org.springframework.boot.autoconfigure.logging": WARN
-
+    org:
+      springframework: ERROR

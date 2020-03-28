@@ -1,4 +1,4 @@
-package me.interair.wi.config.rest
+package me.interair.wi.config.api
 
 import org.springframework.context.annotation.Bean
 import springfox.documentation.builders.ApiInfoBuilder

@@ -10,4 +10,4 @@ data class Ref(
          * Id of referenced doc
          */
         val id: String
-): Serializable
+) : Serializable

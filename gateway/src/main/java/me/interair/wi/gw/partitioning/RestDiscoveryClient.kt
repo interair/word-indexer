@@ -8,10 +8,10 @@ import org.springframework.cloud.client.ServiceInstance
 import org.springframework.cloud.client.discovery.DiscoveryClient
 import java.util.concurrent.TimeUnit
 
-class RestDiscoveryClient(val partitions: Int): DiscoveryClient {
+class RestDiscoveryClient(val partitions: Int) : DiscoveryClient {
 
     var mapping: Cache<String, Set<ServiceInstance>> = CacheBuilder.newBuilder()
-            .expireAfterWrite(1, TimeUnit.MINUTES)
+            .expireAfterWrite(3, TimeUnit.SECONDS)
             .build()
 
     override fun getServices(): List<String> {
