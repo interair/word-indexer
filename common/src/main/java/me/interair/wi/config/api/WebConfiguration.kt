@@ -54,23 +54,23 @@ class WebConfiguration {
                                     .backoff(Backoff.fixed(Duration.ofMillis(100))).retryMax(3))
                 }
                 .filters { exchangeFilterFunctions ->
-                    exchangeFilterFunctions.add(logRequest());
-                    exchangeFilterFunctions.add(logResponse());
+                    exchangeFilterFunctions.add(logRequest())
+                    exchangeFilterFunctions.add(logResponse())
                 }
 
     }
 
     private fun logRequest() : ExchangeFilterFunction {
         return ExchangeFilterFunction.ofRequestProcessor { clientRequest ->
-            log.debug("Request: {} {}", clientRequest.method(), clientRequest.url());
-            Mono.just(clientRequest);
-        };
+            log.debug("Request: {} {}", clientRequest.method(), clientRequest.url())
+            Mono.just(clientRequest)
+        }
     }
 
     private fun logResponse() : ExchangeFilterFunction {
-        return ExchangeFilterFunction.ofResponseProcessor() { response ->
-            log.debug("Reponse: {}", response.statusCode());
-            Mono.just(response);
-        };
+        return ExchangeFilterFunction.ofResponseProcessor { response ->
+            log.debug("Reponse: {}", response.statusCode())
+            Mono.just(response)
+        }
     }
 }

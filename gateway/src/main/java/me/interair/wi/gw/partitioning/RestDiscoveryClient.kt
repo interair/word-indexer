@@ -1,17 +1,22 @@
 package me.interair.wi.gw.partitioning
 
-import com.google.common.cache.Cache
-import com.google.common.cache.CacheBuilder
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.benmanes.caffeine.cache.Scheduler
 import me.interair.wi.config.node.NodeInfo
 import org.springframework.cloud.client.DefaultServiceInstance
 import org.springframework.cloud.client.ServiceInstance
 import org.springframework.cloud.client.discovery.DiscoveryClient
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class RestDiscoveryClient(val partitions: Int) : DiscoveryClient {
 
-    var mapping: Cache<String, Set<ServiceInstance>> = CacheBuilder.newBuilder()
-            .expireAfterWrite(3, TimeUnit.SECONDS)
+    var mapping: Cache<String, Set<ServiceInstance>> = Caffeine.newBuilder()
+            .initialCapacity(partitions)
+            .expireAfterAccess(2, TimeUnit.SECONDS)
+            .recordStats()
+            .scheduler(Scheduler.forScheduledExecutorService(Executors.newScheduledThreadPool(1)))
             .build()
 
     override fun getServices(): List<String> {
@@ -27,7 +32,7 @@ class RestDiscoveryClient(val partitions: Int) : DiscoveryClient {
     }
 
     fun nodes(): Set<ServiceInstance> {
-        return mapping.asMap().values.flatMap { it.asIterable() }.toCollection(HashSet())
+        return mapping.asMap().values.filter { it.isNotEmpty() }.flatMap { it.asIterable() }.toCollection(HashSet())
     }
 
     fun update(nodeInfo: NodeInfo) {
