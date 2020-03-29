@@ -24,7 +24,7 @@ class ErrorHandler(
 ) : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [IllegalArgumentException::class, IllegalStateException::class])
-    protected fun handleIllegalArgumentException(ex: RuntimeException, request: WebRequest?): ResponseEntity<*>? {
+    protected fun handleIllegalArgumentException(ex: RuntimeException, request: WebRequest): ResponseEntity<*>? {
         return handleExceptionInternal(ex, ex.message, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
     }
 
