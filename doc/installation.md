@@ -2,7 +2,7 @@
 
 ## Requirements ##
 
-For building WI-indexer:
+For building word-indexer:
 
 * JRE >= 1.8
 
@@ -48,6 +48,7 @@ Check health via
 ```
 
 Example of response:
+
 ![alt text](502.png)
 
 ### For testing FT use curl or swagger
