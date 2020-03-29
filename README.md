@@ -2,15 +2,13 @@
 
 ##
 
-### Система состоит из 3 модулей:
+### System consist of 3 modules
 
-* Web gateway (Предоставляет API для загрузки файлов и поиска по словам)
+* Web gateway: Provides REST API for uploading files and searching words, also some additional endpoints like `/health`, `/nodes`
 
-* File worker (занимаются загрузкой/хранением файлов и извлечением слов)
+* File worker: Responsible for uploading, storage, extracting words from files
 
-* Index data nodes (хранят индекс слов с дополнительной мето-информацией: имя, id файла)
+* Index data nodes: Sharded service for storing and searching words
 
-Не содержаит DB/MQ или каких либо внешних компонент для упрощения
-
-* [Запуск и тестирование](doc/installation.md)
-* [Описание](doc/description.md)
+* [Building and testing](doc/installation.md)
+* [Description](doc/description.md)

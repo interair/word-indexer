@@ -9,15 +9,25 @@ import org.ehcache.config.builders.CacheManagerBuilder
 import org.ehcache.config.builders.ResourcePoolsBuilder
 import org.ehcache.config.units.EntryUnit
 import org.ehcache.config.units.MemoryUnit
+import org.ehcache.core.spi.service.StatisticsService
+import org.ehcache.core.statistics.DefaultStatisticsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+
 
 @Configuration
 class LocalWordsRepositoryConfiguration {
 
     @Bean
-    fun cacheManager(nodeProperties: NodeProperties): CacheManager {
+    fun statisticsService(): StatisticsService {
+        return DefaultStatisticsService()
+    }
+
+    @Bean
+    fun cacheManager(nodeProperties: NodeProperties, statisticsService: StatisticsService): CacheManager {
+
         return CacheManagerBuilder.newCacheManagerBuilder()
+                .using(statisticsService)
                 .with(CacheManagerBuilder.persistence(nodeProperties.cachePath))
                 .withCache("persistent-cache", CacheConfigurationBuilder
                         .newCacheConfigurationBuilder(String::class.java, WordReport::class.java,

@@ -21,7 +21,7 @@ class NodesController(val discovery: RestDiscoveryClient, val partitionResolver:
         return discovery.getInstances(id)
     }
 
-    @GetMapping(path = ["nodes/{word}"])
+    @GetMapping(path = ["partition/{word}"])
     fun nodesForWord(@PathVariable("word") word: String): List<ServiceInstance> {
         return discovery.getInstances(partitionResolver.resolvePartition(word))
     }
