@@ -69,3 +69,8 @@ watch curl "http://localhost:8080/word/including" -H "accept: application/json"
 docker stop shard1-node2 shard2-node2
 ```
 * Check watch from previous step
+* Revert containers and stop old
+```
+docker start shard1-node2 shard2-node2
+docker stop shard1-node1 shard2-node1
+```
