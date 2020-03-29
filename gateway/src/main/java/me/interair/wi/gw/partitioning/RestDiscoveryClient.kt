@@ -14,7 +14,7 @@ class RestDiscoveryClient(val partitions: Int) : DiscoveryClient {
 
     var mapping: Cache<String, Set<ServiceInstance>> = Caffeine.newBuilder()
             .initialCapacity(partitions)
-            .expireAfterAccess(2, TimeUnit.SECONDS)
+            .expireAfterAccess(1, TimeUnit.SECONDS)
             .recordStats()
             .scheduler(Scheduler.forScheduledExecutorService(Executors.newScheduledThreadPool(1)))
             .build()
@@ -32,7 +32,11 @@ class RestDiscoveryClient(val partitions: Int) : DiscoveryClient {
     }
 
     fun nodes(): Set<ServiceInstance> {
-        return mapping.asMap().values.filter { it.isNotEmpty() }.flatMap { it.asIterable() }.toCollection(HashSet())
+        return mapping.asMap().values.flatMap { it.asIterable() }.toCollection(HashSet())
+    }
+
+    fun availablePartitions(): Int {
+        return mapping.asMap().values.filter { it.isNotEmpty() }.size
     }
 
     fun update(nodeInfo: NodeInfo) {

@@ -44,7 +44,7 @@ After startup, it will be available by browsing to API: http://localhost:8080/sw
 Check health via 
 
 ```
-    curl "http://localhost:8080/health"
+   warch curl "http://localhost:8080/health"
 ```
 
 Example of response:
@@ -58,7 +58,7 @@ Example of response:
 ```    
 * Check result
 ```
-    curl -X GET "http://localhost:8080/word/including" -H "accept: application/json"
+    watch curl -X GET "http://localhost:8080/word/including" -H "accept: application/json"
 ```
 * Stop random shards
 

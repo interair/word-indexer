@@ -14,9 +14,9 @@ class HealthController(val discovery: RestDiscoveryClient) {
 
     @GetMapping
     fun health(): ResponseEntity<HealthResult> {
-        val healthy = discovery.nodes().size.compareTo(discovery.partitions) == 0
+        val healthy = discovery.availablePartitions().compareTo(discovery.partitions) == 0
         discovery.mapping.cleanUp()
-        val result = HealthResult(healthy, discovery.partitions, discovery.nodes().size)
+        val result = HealthResult(healthy, discovery.partitions, discovery.availablePartitions())
         return if (healthy) {
             ResponseEntity.ok(result)
         } else {

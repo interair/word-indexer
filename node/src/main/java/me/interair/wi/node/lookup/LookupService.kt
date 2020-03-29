@@ -11,7 +11,7 @@ class LookupService(val rest: WebClient, val props: NodeProperties) {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 500)
     public fun sendInfo() {
         val nodeInfo = NodeInfo(props.startPartition, props.endPartition, true, props.selfName)
         rest
