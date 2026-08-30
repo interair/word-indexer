@@ -1,0 +1,18 @@
+{
+  "name": "word-indexer",
+  "install": "bash .cursor/install.sh",
+  "terminals": [
+    {
+      "name": "gateway",
+      "command": "JAVA_HOME=$HOME/jdks/jdk8 $HOME/jdks/jdk8/bin/java -jar gateway/build/libs/gateway.jar"
+    },
+    {
+      "name": "node",
+      "command": "NODE_STARTPARTITION=0 NODE_ENDPARTITION=255 NODE_SELFNAME=localhost NODE_ENDPOINTURL=http://localhost:8080 JAVA_HOME=$HOME/jdks/jdk8 $HOME/jdks/jdk8/bin/java -jar node/build/libs/node.jar"
+    }
+  ],
+  "ports": [
+    { "name": "gateway", "port": 8080 },
+    { "name": "node", "port": 8081 }
+  ]
+}
