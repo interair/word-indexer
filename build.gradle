@@ -48,8 +48,11 @@ allprojects {
             dependency "com.google.guava:guava:27.0-jre"
             dependency "org.slf4j:slf4j-api:1.7.25"
             dependency "ch.qos.logback:logback-classic:1.2.3"
-            dependency "org.junit.jupiter:junit-jupiter-api:5.6.1"
-            dependency "org.junit.jupiter:junit-jupiter-engine:5.6.1"
+            dependency "org.junit.jupiter:junit-jupiter-api:5.5.2"
+            dependency "org.junit.jupiter:junit-jupiter-engine:5.5.2"
+            dependency "org.junit.platform:junit-platform-launcher:1.5.2"
+            dependency "org.junit.platform:junit-platform-engine:1.5.2"
+            dependency "org.junit.platform:junit-platform-commons:1.5.2"
             dependency "org.hamcrest:hamcrest-junit:2.0.0.0"
             dependency "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
             dependency "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jackson_version"
@@ -68,10 +71,16 @@ allprojects {
         kotlinOptions.jvmTarget = "1.8"
     }
 
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events "passed", "skipped", "failed"
+    dependencies {
+        testRuntime "org.junit.platform:junit-platform-launcher:1.5.2"
+    }
+
+    afterEvaluate {
+        test {
+            useJUnitPlatform()
+            testLogging {
+                events "passed", "skipped", "failed"
+            }
         }
     }
 }
